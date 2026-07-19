@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  // baseURL: "https://ats-score-ai-nfh8.onrender.com/api",
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://ats-score-ai-nfh8.onrender.com/api",
+  
 });
 
 export default api;
