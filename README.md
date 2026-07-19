@@ -1,42 +1,93 @@
-# 🚀 ATS Score AI
+# 🚀 ResumeCraft AI
 
-An AI-powered Resume ATS (Applicant Tracking System) Analyzer built using the **MERN Stack** and **Groq LLM**. Upload your resume in PDF format and instantly receive an AI-generated ATS score, detected skills, missing skills, recommended job roles, and personalized suggestions to improve your resume.
+An AI-powered resume optimization and interview preparation platform built using the **MERN Stack** and **Groq LLM**.
 
----
-
-## 📖 Project Overview
-
-ATS Score AI helps job seekers evaluate how well their resumes align with modern recruitment systems. The application extracts text from uploaded PDF resumes, sends it to an AI model for analysis, and presents actionable insights in a clean and intuitive interface.
-
-This project demonstrates the integration of **React**, **Node.js**, **Express.js**, **MongoDB**, and **Generative AI** to build a real-world full-stack application.
+ResumeCraft AI analyzes resumes against job descriptions, generates ATS compatibility scores, identifies missing skills, improves resume content, and creates personalized interview questions using Generative AI.
 
 ---
 
-## ✨ Features
+# 📖 Project Overview
 
-- 📄 Upload Resume (PDF)
-- 🤖 AI-powered Resume Analysis
-- 📊 ATS Score Generation
-- 💻 Technical Skills Detection
-- ❌ Missing Skills Identification
-- 🎯 Recommended Job Roles
-- 💡 Personalized Resume Improvement Suggestions
-- ⚡ Fast and Responsive User Interface
-- 📁 Secure File Upload using Multer
-- 🗄️ MongoDB Integration
+ResumeCraft AI helps job seekers improve their chances of getting shortlisted by understanding how their resume matches a specific job requirement.
+
+The application extracts text from uploaded PDF resumes, analyzes the resume using AI, compares it with job descriptions, provides optimization suggestions, rewrites resume sections, and prepares candidates for interviews.
+
+This project demonstrates the integration of:
+
+- React
+- Node.js
+- Express.js
+- MongoDB
+- PDF Processing
+- Prompt Engineering
+- Generative AI (Groq LLM)
+
+to build a real-world AI-powered career assistant.
 
 ---
 
-## 🛠️ Tech Stack
+# ✨ Features
 
-### Frontend
+## 📄 Resume Analysis
+
+- Upload resume in PDF format
+- Extract resume content automatically
+- Generate AI-powered ATS score
+- Detect technical skills
+- Identify missing skills
+- Provide improvement suggestions
+
+## 🎯 Resume vs Job Description Matching
+
+- Compare resume with target job description
+- Calculate keyword matching percentage
+- Find matching skills
+- Identify missing keywords
+- Analyze experience compatibility
+- Suggest suitable job roles
+
+## ✍️ AI Resume Rewrite
+
+- Generate improved professional summary
+- Rewrite experience points using stronger action verbs
+- Add ATS-friendly keywords
+- Suggest skills to learn
+- Improve resume readability
+
+## 🎤 AI Interview Preparation
+
+Generate personalized interview questions based on:
+
+- Resume experience
+- Job description
+- Target role
+
+Includes:
+
+- Technical questions
+- Project-based questions
+- HR interview questions
+
+## ⚡ Other Features
+
+- Responsive React UI
+- Secure PDF upload
+- AI-generated structured JSON responses
+- REST API architecture
+- MongoDB database integration
+
+---
+
+# 🛠️ Tech Stack
+
+## Frontend
 
 - React.js
 - Vite
 - Tailwind CSS
 - Axios
 
-### Backend
+## Backend
 
 - Node.js
 - Express.js
@@ -46,239 +97,233 @@ This project demonstrates the integration of **React**, **Node.js**, **Express.j
 - pdf-parse
 - dotenv
 
-### AI
+## Artificial Intelligence
 
 - Groq API
 - Llama 3.3 70B Versatile Model
+- Prompt Engineering
 
 ---
 
-## 🏗️ System Architecture
+# 🏗️ System Architecture
 
-```text
-                    User
+                     User
                       │
                       ▼
               React Frontend
                       │
-          Upload Resume (PDF)
-                      │
                       ▼
               Express.js API
                       │
-          Multer File Upload
+          Upload Resume PDF + JD
                       │
                       ▼
              PDF Text Extraction
-                  (pdf-parse)
                       │
                       ▼
                 Groq LLM API
                       │
-                      ▼
-             AI Resume Analysis
+    ┌─────────────────┼─────────────────┐
+    ▼                 ▼                 ▼
+
+    ATS Analysis Resume Rewrite Interview Generator
+
+    │                 │                 │
+
+    └─────────────────┼─────────────────┘
                       │
                       ▼
-                 MongoDB Atlas
+
+             Structured JSON Response
+
                       │
                       ▼
-          Analysis Response (JSON)
-                      │
-                      ▼
-             React Result Dashboard
-```
+
+            React Result Dashboard
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
-```text
-ATS-Score-AI
+ResumeCraft-AI
+
 │
 ├── frontend
-│   ├── src
-│   │   ├── components
-│   │   ├── services
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   └── package.json
+│ ├── src
+│ │ ├── components
+│ │ ├── services
+│ │ ├── App.jsx
+│ │ └── main.jsx
+│ └── package.json
 │
 ├── backend
-│   ├── config
-│   ├── controllers
-│   ├── middleware
-│   ├── models
-│   ├── routes
-│   ├── services
-│   ├── uploads
-│   ├── app.js
-│   ├── server.js
-│   └── package.json
+│ ├── config
+│ ├── controllers
+│ ├── middleware
+│ ├── models
+│ ├── routes
+│ ├── services
+│ │ ├── prompts
+│ │ ├── groqService.js
+│ │ ├── resumeRewriteService.js
+│ │ └── interviewService.js
+│ │
+│ ├── uploads
+│ ├── app.js
+│ ├── server.js
+│ └── package.json
 │
 └── README.md
-```
 
 ---
 
-## 🚀 Getting Started
+# 🚀 Getting Started
 
-### 1️⃣ Clone the Repository
-
-```bash
-git clone https://github.com/lohit18/ATS-Score-AI.git
-
-cd ATS-Score-AI
-```
-
----
-
-### 2️⃣ Backend Setup
+## 1️⃣ Clone Repository
 
 ```bash
+git clone https://github.com/lohit18/ResumeCraft-AI.git
+
+cd ResumeCraft-AI
+
+2️⃣ Backend Setup
+
+Navigate to backend:
+
 cd backend
 
 npm install
-```
 
-Create a `.env` file inside the backend folder.
+Create .env file:
 
-```env
 PORT=5000
 
 MONGODB_URI=your_mongodb_connection_string
 
 GROQ_API_KEY=your_groq_api_key
-```
 
-Run the backend server
+Start backend:
 
-```bash
 npm run dev
-```
 
----
+Backend runs on:
 
-### 3️⃣ Frontend Setup
+http://localhost:5000
 
-Open a new terminal.
+3️⃣ Frontend Setup
 
-```bash
+Open another terminal:
+
 cd frontend
 
 npm install
 
 npm run dev
-```
 
 Frontend runs on:
 
-```text
 http://localhost:5173
-```
 
-Backend runs on:
+📡 API Flow
 
-```text
-http://localhost:5000
-```
-
----
-
-## 📡 API Endpoint
-
-### Upload Resume
-
-```http
+Resume Analysis API
 POST /api/resumes/upload
-```
 
-**Request**
+Uploads resume PDF and returns AI-generated analysis.
 
-Form Data
+Job Matching API
 
-| Key    | Type     |
-| ------ | -------- |
-| resume | PDF File |
+Input:
 
-**Response**
+Resume Text
++
+Job Description
++
+Role
 
-```json
+Output:
+
 {
-  "success": true,
-  "analysis": {
-    "atsScore": 86,
-    "skills": ["React", "Node.js", "MongoDB"],
-    "missingSkills": ["Docker", "TypeScript"],
-    "recommendedRoles": ["Frontend Developer", "MERN Stack Developer"],
-    "suggestions": ["Learn Docker", "Improve GitHub Projects"]
-  }
+ "atsScore":80,
+ "matchedSkills":[
+    "React",
+    "Node.js",
+    "MongoDB"
+ ],
+ "missingSkills":[
+    "Docker"
+ ],
+ "suggestions":[
+    "Improve backend experience"
+ ]
 }
-```
+Resume Rewrite Output
 
----
+Example:
 
-## 📸 Screenshots
+{
+ "improvedSummary":
+ "Full Stack Developer experienced in MERN applications",
 
-> Add screenshots here after uploading them.
+ "optimizedKeywords":[
+    "React",
+    "Node.js",
+    "MongoDB"
+ ],
 
-### 🏠 Home Page
+ "recommendedSkillsToLearn":[
+    "Docker"
+ ]
+}
 
-```
+
+Interview Preparation Output
+
+Generates:
+
+Technical Questions
+
+Project Questions
+
+HR Questions
+
+based on resume and job requirements.
+
+
+✍️ Resume Rewrite
+
 (Add Screenshot)
+
+🎤 Interview Preparation
+
+
+📚 What I Learned
+
+Through this project I gained practical experience in:
+
+Building full-stack MERN applications
+Designing REST APIs
+PDF text extraction
+File upload handling
+MongoDB and Mongoose
+Prompt Engineering
+Large Language Model integration
+Structured AI responses
+Generative AI application development
+React component architecture
+API communication using Axios
+Deploying full-stack applications
+👨‍💻 Author
+
+Lohit Kumar
+
+GitHub:
+
+https://github.com/lohit18
+
+⭐ Support
+
+If you find ResumeCraft AI useful, consider giving the repository a ⭐.
+
+It helps support future improvements and AI-powered projects.
 ```
-
-### 📄 Upload Resume
-
-```
-(Add Screenshot)
-```
-
-### 📊 Resume Analysis
-
-```
-(Add Screenshot)
-```
-
----
-
-## 🎯 Future Improvements
-
-- 🔐 User Authentication (JWT)
-- 📑 Resume History Dashboard
-- 📌 Job Description Matching
-- 📈 Skill Analytics & Charts
-- 🌙 Dark Mode
-- ☁️ Cloud Storage Integration
-- 🚀 Project Deployment
-- 📥 Download Analysis Report (PDF)
-
----
-
-## 📚 What I Learned
-
-This project helped me gain hands-on experience with:
-
-- Building a full-stack MERN application
-- REST API development
-- File uploads using Multer
-- PDF text extraction
-- MongoDB & Mongoose
-- Prompt Engineering
-- Integrating Generative AI (Groq LLM)
-- React State Management
-- API communication using Axios
-- End-to-End Application Development
-
----
-
-## 👨‍💻 Author
-
-**Lohit Kumar**
-
-- GitHub: https://github.com/lohit18
-
----
-
-## ⭐ Support
-
-If you found this project helpful, consider giving it a ⭐ on GitHub. It helps others discover the project and motivates future improvements.

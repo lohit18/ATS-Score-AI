@@ -2,7 +2,18 @@ const Resume = require("../models/Resume");
 
 const extractPdfText = require("../services/pdfService");
 
-const analyzeResume = require("../services/groqService");
+const {
+  compareResumeWithJD
+} = require("../services/groqService");
+
+const {
+  rewriteResume
+} = require("../services/resumeRewriteService");
+
+const {
+  generateInterviewQuestions
+} = require("../services/interviewService");
+
 
 
 const createResume = async (req, res) => {
@@ -36,95 +47,96 @@ const uploadResume = async (req, res) => {
     console.log("📄 FILE RECEIVED:");
     console.log(req.file);
 
+    const {
+      jobDescription,
+      role
+    } = req.body;
+
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "Resume PDF is required."
+      });
+    }
+
+    if (!jobDescription || !role) {
+      return res.status(400).json({
+        success: false,
+        message: "Job Description and Role are required."
+      });
+    }
 
     console.log("1️⃣ Starting PDF extraction");
 
-
-    const text = await extractPdfText(
-      req.file.path
-    );
-
+    const resumeText = await extractPdfText(req.file.path);
 
     console.log("2️⃣ PDF extracted successfully");
+    console.log("Extracted text length:", resumeText.length);
 
-    console.log(
-      "Extracted text length:",
-      text.length
-    );
+    const payload = {
+      resumeText,
+      jobDescription,
+      role
+    };
 
+    console.log("3️⃣ Comparing Resume with Job Description...");
 
-    console.log("3️⃣ Sending text to Groq");
+    const atsAnalysis =
+      await compareResumeWithJD(payload);
 
+    console.log("✅ ATS Analysis Completed");
 
-    const aiAnalysis = await analyzeResume(
-      text
-    );
+    console.log("4️⃣ Rewriting Resume...");
 
+    const resumeRewrite =
+      await rewriteResume(payload);
 
-    console.log("4️⃣ Groq response received");
+    console.log("✅ Resume Rewrite Completed");
 
-    console.log(aiAnalysis);
+    console.log("5️⃣ Generating Interview Questions...");
 
+    const interviewQuestions =
+      await generateInterviewQuestions(payload);
 
+    console.log("✅ Interview Questions Generated");
 
-    const resume = await Resume.create({
+    // Save uploaded resume only
+    await Resume.create({
 
       fileName: req.file.filename,
 
-      extractedText: text,
-
-      skills: aiAnalysis.skills,
-
-      atsScore: aiAnalysis.atsScore,
-
-      missingSkills: aiAnalysis.missingSkills,
-
-      recommendedRoles: aiAnalysis.recommendedRoles,
-
-      suggestions: aiAnalysis.suggestions,
+      extractedText: resumeText
 
     });
 
+    console.log("6️⃣ Resume Saved");
 
-
-    console.log("5️⃣ Saved to MongoDB");
-
-
-
-    res.status(201).json({
+    return res.status(200).json({
 
       success: true,
 
-      analysis: {
+      data: {
 
-        atsScore: resume.atsScore,
+        atsAnalysis,
 
-        skills: resume.skills,
+        resumeRewrite,
 
-        missingSkills: resume.missingSkills,
+        interviewQuestions
 
-        recommendedRoles: resume.recommendedRoles,
-
-        suggestions: resume.suggestions,
-
-      },
+      }
 
     });
 
-
   } catch (error) {
 
-
     console.log("❌ ERROR OCCURRED");
-
     console.log(error);
 
-
-    res.status(500).json({
+    return res.status(500).json({
 
       success: false,
 
-      message: error.message,
+      message: error.message
 
     });
 
@@ -138,6 +150,6 @@ module.exports = {
 
   createResume,
 
-  uploadResume,
+  uploadResume
 
 };
